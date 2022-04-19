@@ -1,0 +1,30 @@
+{
+  "name": "colabcode-server",
+  "version": "1.0.0",
+  "description": "Server for ColabCode extention",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ImSirTea/ColabCode.git"
+  },
+  "author": "Dan Wells",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ImSirTea/ColabCode/issues"
+  },
+  "homepage": "https://github.com/ImSirTea/ColabCode#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "ts-node": "^10.7.0",
+    "tsc-alias": "^1.6.6",
+    "typescript": "^4.6.3"
+  }
+}
