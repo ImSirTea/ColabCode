@@ -1,23 +1,24 @@
-/* eslint-disable max-len */
 module.exports = {
+  root: true,
   env: {
     es2021: true,
     node: true,
   },
   extends: [
     'airbnb-base',
+    'airbnb-typescript/base',
   ],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    parser: '@typescript-eslint/parser',
     ecmaVersion: 'latest',
     sourceType: 'module',
+    project: './tsconfig.json',
+    tsconfigRootDir: __dirname
   },
   plugins: [
     '@typescript-eslint',
     'import',
   ],
-  rules: {
-  },
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
@@ -25,5 +26,10 @@ module.exports = {
     'import/resolver': {
       typescript: {},
     },
+  },
+  ignorePatterns: ['.eslintrc.js'],
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
   },
 };
