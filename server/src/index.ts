@@ -1,17 +1,20 @@
 import express from 'express';
 import session from 'express-session';
 import serverConfig from '@/config';
-import api from './api';
+import api from '@/api';
 
 // Create an express server
 const app = express();
 
+// Make sure body content as text is interpreted properly
+app.use(express.text());
+
 // Use sessions to prevent need to log in
 app.use(session({
   secret: serverConfig.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
-  cookie: { secure: true }
+  cookie: { secure: false },
 }));
 
 // Use the API router
