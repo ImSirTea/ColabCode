@@ -1,8 +1,10 @@
 import * as vscode from 'vscode';
+import { sendCodeSubmission } from './api';
 
 let postTimeout: NodeJS.Timeout;
 let postTimeoutDelay: number = 1000;
 
+const roomId = "test-room" as const;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -18,7 +20,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 
 		postTimeout = setTimeout(() => {
-			console.log(changeEvent.document.getText());
+			sendCodeSubmission(roomId, changeEvent.document.getText());
 		}, postTimeoutDelay);
 	});
 
