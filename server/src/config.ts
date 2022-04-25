@@ -24,7 +24,6 @@ function getConfigValue(name: string, fallback?: string) {
  */
 const serverConfig = {
   PORT: getConfigValue('PORT', '8080'),
-  SESSION_SECRET: getConfigValue('SESSION_SECRET', 'default'),
 };
 
 // Output an error to console if we have unset variables

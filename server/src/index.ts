@@ -1,6 +1,4 @@
 import express from 'express';
-import session from 'express-session';
-import serverConfig from '@/config';
 import api from '@/api';
 
 // Create an express server
@@ -9,16 +7,13 @@ const app = express();
 // Make sure body content as text is interpreted properly
 app.use(express.text());
 
-// Use sessions to prevent need to log in
-app.use(session({
-  secret: serverConfig.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  cookie: { secure: false },
-}));
-
 // Use the API router
 app.use('/api', api);
+
+// Static website providing
+app.use(express.static('static', { extensions: ['html'] }));
+
+app.use('/assets', express.static('assets'));
 
 // Run the server
 const port = process.env.PORT ?? 8080;

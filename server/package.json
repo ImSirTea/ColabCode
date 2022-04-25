@@ -20,7 +20,7 @@
   "homepage": "https://github.com/ImSirTea/ColabCode#readme",
   "devDependencies": {
     "@types/express": "^4.17.13",
-    "@types/express-session": "^1.17.4",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.13.0",
@@ -36,6 +36,6 @@
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "express-session": "^1.17.2"
+    "uuid": "^8.3.2"
   }
 }
