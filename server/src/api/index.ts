@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import Room from '@/api/Room';
 import { v4 as uuidv4 } from 'uuid';
+import Room from '@/api/Room';
 
 // Create the API router
 const api = Router();
