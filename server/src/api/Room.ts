@@ -1,5 +1,7 @@
+import util from 'util';
 import { RoomJSON } from '@/types';
 import CodeSubmission from '@/api/CodeSubmission';
+import { Line } from '@/analizer/Line';
 
 /**
  * Represents a room to hold code submissions
@@ -32,6 +34,13 @@ class Room {
   }
 
   /**
+   * Returns a list of all the submissions
+   */
+  get submissionsList() {
+    return Object.values(this.submissions);
+  }
+
+  /**
    * Adds a user to a room
    * @param userId The user's id
    * @returns Success state of adding a new user
@@ -59,6 +68,9 @@ class Room {
     }
 
     this.#submissions[userId] = new CodeSubmission(userId, codeSrc);
+
+    this.updateAverageSolution();
+
     return true;
   }
 
@@ -76,6 +88,19 @@ class Room {
       }
     });
     return output;
+  }
+
+  /**
+   * Updates the average code solution for the class
+   */
+  updateAverageSolution() {
+    console.log('Updating average');
+
+    const line = new Line();
+    this.submissionsList.forEach((submission) => {
+      line.tryConsume(submission.codeAST?.body[0]);
+    });
+    console.log(util.inspect(line.mostCommon, false, null, true));
   }
 }
 
