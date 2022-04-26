@@ -34,5 +34,6 @@ module.exports = {
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
     'max-classes-per-file': 'off',
+    'class-methods-use-this': 'off',
   },
 };

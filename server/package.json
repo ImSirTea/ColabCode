@@ -37,6 +37,7 @@
     "abstract-syntax-tree": "^2.20.6",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
+    "ts-morph": "^14.0.0",
     "uuid": "^8.3.2"
   }
 }

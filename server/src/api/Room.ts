@@ -2,6 +2,8 @@ import util from 'util';
 import { RoomJSON } from '@/types';
 import CodeSubmission from '@/api/CodeSubmission';
 import { Line } from '@/analizer/Line';
+import { FunctionNode } from '@/analyzerv2/Function';
+import { BlockNode } from '@/analyzerv2/Block';
 
 /**
  * Represents a room to hold code submissions
@@ -96,11 +98,20 @@ class Room {
   updateAverageSolution() {
     console.log('Updating average');
 
-    const line = new Line();
+    const functionNode = new BlockNode();
+
     this.submissionsList.forEach((submission) => {
-      line.tryConsume(submission.codeAST?.body[0]);
+      if (!submission.codeAST) {
+        console.log('Failed???');
+        return;
+      }
+      const file = submission.codeAST.getSourceFile('index.ts');
+      if (!file) { return; }
+      const node = file.getFirstChild();
+      if (!node) { return; }
+      functionNode.tryConsume(node);
     });
-    console.log(util.inspect(line.mostCommon, false, null, true));
+    // console.log(util.inspect(line.mostCommon, false, null, true));
   }
 }
 

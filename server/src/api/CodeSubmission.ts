@@ -1,4 +1,4 @@
-import { parse } from 'abstract-syntax-tree';
+import { Project } from 'ts-morph';
 import util from 'util';
 import { CodeSubmissionJSON } from '@/types';
 
@@ -10,7 +10,7 @@ class CodeSubmission {
 
   #codeSrc: string;
 
-  #codeAST: any;
+  #codeAST: Project;
 
   /**
    * Creates a new code submission
@@ -62,8 +62,8 @@ class CodeSubmission {
   private updateAST() {
     console.log(`Updating AST of ${this.sessionId}`);
 
-    this.#codeAST = parse(this.codeSrc);
-    console.log(util.inspect(this.#codeAST, false, null, true));
+    this.#codeAST = new Project();
+    this.#codeAST.createSourceFile('index.ts', this.codeSrc);
   }
 
   /**
