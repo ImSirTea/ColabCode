@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import Room from '@/api/Room';
+import testRoom from './debug';
 
 // Create the API router
 const api = Router();
 
 // Store an object of all the rooms
 const rooms: { [key: string]: Room } = {};
+rooms.test = testRoom;
 
 /**
  * Gets a room by ID, creating it if not exists
