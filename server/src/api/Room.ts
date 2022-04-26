@@ -111,6 +111,8 @@ class Room {
       if (!node) { return; }
       functionNode.tryConsume(node);
     });
+
+    console.log(functionNode.getFrequencies());
     // console.log(util.inspect(line.mostCommon, false, null, true));
   }
 }

@@ -23,14 +23,12 @@ export class LineNode extends GenericNode {
   }
 
   getFrequencies() {
-    const options: { [key: string]: FrequencyEntry<any>[] } = {};
-    this.possibilities.forEach((possibility) => {
-      options[possibility.kind] = [{
+    return {
+      kind: this.possibilities.map((possibility) => ({
         frequency: possibility.count,
-        value: possibility.getFrequencies(),
-      }];
-    });
-    return options;
+        value: possibility.kind,
+      })),
+    };
   }
 }
 
@@ -60,6 +58,11 @@ export class BlockNode extends GenericNode {
   }
 
   getFrequencies() {
-    return {};
+    const options: { [key: number]: FrequencyEntry<string>[] } = {};
+    this.linePossibilities.forEach((possibility, i) => {
+      const frequencies = possibility.getFrequencies().kind;
+      options[i] = frequencies;
+    });
+    return options;
   }
 }
