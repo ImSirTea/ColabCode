@@ -55,3 +55,21 @@ export abstract class BranchDefinition<T> {
    */
   abstract tryConsume(branch: any): boolean;
 }
+
+export interface ValueDefinition {
+  type: string;
+  value?: any;
+}
+
+export function parseValue(init: any) {
+  if (!init || init === null) {
+    return { type: 'undefined' };
+  }
+  if (init.type === 'Literal') {
+    return { type: 'literal', value: init.value };
+  }
+  if (init.type === 'Identifier') {
+    return { type: 'identifier', value: init.name };
+  }
+  return { type: 'unknown' };
+}
