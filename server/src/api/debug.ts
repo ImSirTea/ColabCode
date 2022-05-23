@@ -6,6 +6,10 @@ testRoom.submitCode('user1', `
 function test(b = 'hi') {
   const a = 'testing';
   console.log(a);
+}
+
+function b() {
+  
 }`);
 testRoom.submitCode('user2', `
 const test = (c = 'hi') => {
