@@ -15,4 +15,10 @@ export class UnknownNode extends GenericNode {
   getFrequencies() {
     return {};
   }
+
+  getMostCommon() {
+    return {
+      kind: this.kind,
+    };
+  }
 }

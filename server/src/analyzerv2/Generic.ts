@@ -9,4 +9,6 @@ export abstract class GenericNode {
   abstract tryConsume(node: Node<ts.Node>): boolean;
 
   abstract getFrequencies(): { [key: string]: FrequencyEntry<any>[] };
+
+  abstract getMostCommon(): any;
 }

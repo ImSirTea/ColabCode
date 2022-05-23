@@ -30,6 +30,18 @@ export class LineNode extends GenericNode {
       })),
     };
   }
+
+  getMostCommon() {
+    const frequencies = this.getFrequencies().kind;
+    const mostFrequenct = frequencies.reduce((a, b) => (a.frequency > b.frequency ? a : b));
+    // eslint-disable-next-line no-restricted-syntax
+    for (const possibility of this.possibilities) {
+      if (possibility.kind === mostFrequenct.value) {
+        return possibility.getMostCommon();
+      }
+    }
+    throw new Error('Most common does not exist');
+  }
 }
 
 export class BlockNode extends GenericNode {
@@ -64,5 +76,12 @@ export class BlockNode extends GenericNode {
       options[i] = frequencies;
     });
     return options;
+  }
+
+  getMostCommon() {
+    return {
+      kind: this.kind,
+      lines: this.linePossibilities.map((line) => line.getMostCommon()),
+    };
   }
 }

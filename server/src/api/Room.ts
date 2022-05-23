@@ -1,8 +1,6 @@
 import util from 'util';
 import { RoomJSON } from '@/types';
 import CodeSubmission from '@/api/CodeSubmission';
-import { Line } from '@/analizer/Line';
-import { FunctionNode } from '@/analyzerv2/Function';
 import { BlockNode } from '@/analyzerv2/Block';
 
 /**
@@ -113,6 +111,7 @@ class Room {
     });
 
     console.log(functionNode.getFrequencies());
+    console.log(util.inspect(functionNode.getMostCommon(), false, null, true));
     // console.log(util.inspect(line.mostCommon, false, null, true));
   }
 }
