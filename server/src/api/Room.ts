@@ -11,6 +11,8 @@ class Room {
 
   #submissions: { [key: string]: CodeSubmission } = {};
 
+  #average: any;
+
   /**
    * Creates a room
    * @param code The room code
@@ -38,6 +40,13 @@ class Room {
    */
   get submissionsList() {
     return Object.values(this.submissions);
+  }
+
+  /**
+   * Returns the most common solution of all the submissions
+   */
+  get mostCommon() {
+    return this.#average;
   }
 
   /**
@@ -113,6 +122,8 @@ class Room {
     console.log(functionNode.getFrequencies());
     console.log(util.inspect(functionNode.getMostCommon(), false, null, true));
     // console.log(util.inspect(line.mostCommon, false, null, true));
+
+    this.#average = functionNode.getMostCommon();
   }
 }
 

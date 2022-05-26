@@ -1,18 +1,21 @@
 import {
+  Block,
   Node, SyntaxKind, SyntaxList, ts,
 } from 'ts-morph';
 import { FrequencyEntry } from './FrequencyList';
 import { FunctionNode } from './Function';
 import { GenericNode } from './Generic';
 import { UnknownNode } from './Unknown';
+import { VariableNode } from './Variable';
 
 export class LineNode extends GenericNode {
   kind = 'LineNode';
 
   count = 0;
 
-  possibilities = [
+  possibilities: GenericNode[] = [
     new FunctionNode(),
+    new VariableNode(),
     new UnknownNode(),
   ];
 
@@ -55,6 +58,13 @@ export class BlockNode extends GenericNode {
     if (node.getKind() === SyntaxKind.SyntaxList) {
       const typedNode = node as SyntaxList;
       typedNode.getChildren().forEach((child, i) => {
+        this.addLinePossibility(i, child);
+      });
+      return true;
+    }
+    if (node.getKind() === SyntaxKind.Block) {
+      const typedNode = node as Block;
+      typedNode.getStatements().forEach((child, i) => {
         this.addLinePossibility(i, child);
       });
       return true;
