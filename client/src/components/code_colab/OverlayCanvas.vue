@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { getAllCodeSubmissions } from "../../api/codeSubmissions";
+import { getAllCodeSubmissions } from "@/api/codeSubmissions";
 import { highlight, languages } from "prismjs";
 import { NodeType, parse, TextNode } from "node-html-parser";
 

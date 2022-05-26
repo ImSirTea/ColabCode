@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import OverlayCanvas from "../components/code_colab/OverlayCanvas.vue";
+import OverlayCanvas from "@/components/code_colab/OverlayCanvas.vue";
 
 export default Vue.extend({
   name: "Overlay",

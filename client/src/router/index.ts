@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter, { Route, RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
-import Analysis from "../views/Analysis.vue";
-import Overlay from "../views/Overlay.vue";
+import Home from "@/views/Home.vue";
+import Analysis from "@/views/Analysis.vue";
+import Overlay from "@/views/Overlay.vue";
 
 Vue.use(VueRouter);
 
@@ -14,19 +14,19 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: "/overlay/:roomId?",
-    name: "Overlay", 
+    name: "Overlay",
     component: Overlay,
     props: (route: Route) => ({
       roomId: route.params.roomId ?? null,
-    })
+    }),
   },
   {
     path: "/analysis/:roomId?",
-    name: "Analysis", 
+    name: "Analysis",
     component: Analysis,
     props: (route: Route) => ({
       roomId: route.params.roomId ?? null,
-    })
+    }),
   },
 ];
 
