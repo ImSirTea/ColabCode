@@ -40,4 +40,7 @@
       "transform": "@zerollup/ts-transform-paths",
     }
   ],
+  "ts-node": {
+    "files": true
+  },
 }

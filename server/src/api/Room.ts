@@ -1,5 +1,7 @@
+import util from 'util';
 import { RoomJSON } from '@/types';
 import CodeSubmission from '@/api/CodeSubmission';
+import { BlockNode } from '@/analyzerv2/Block';
 
 /**
  * Represents a room to hold code submissions
@@ -32,6 +34,13 @@ class Room {
   }
 
   /**
+   * Returns a list of all the submissions
+   */
+  get submissionsList() {
+    return Object.values(this.submissions);
+  }
+
+  /**
    * Adds a user to a room
    * @param userId The user's id
    * @returns Success state of adding a new user
@@ -59,6 +68,9 @@ class Room {
     }
 
     this.#submissions[userId] = new CodeSubmission(userId, codeSrc);
+
+    this.updateAverageSolution();
+
     return true;
   }
 
@@ -76,6 +88,31 @@ class Room {
       }
     });
     return output;
+  }
+
+  /**
+   * Updates the average code solution for the class
+   */
+  updateAverageSolution() {
+    console.log('Updating average');
+
+    const functionNode = new BlockNode();
+
+    this.submissionsList.forEach((submission) => {
+      if (!submission.codeAST) {
+        console.log('Failed???');
+        return;
+      }
+      const file = submission.codeAST.getSourceFile('index.ts');
+      if (!file) { return; }
+      const node = file.getFirstChild();
+      if (!node) { return; }
+      functionNode.tryConsume(node);
+    });
+
+    console.log(functionNode.getFrequencies());
+    console.log(util.inspect(functionNode.getMostCommon(), false, null, true));
+    // console.log(util.inspect(line.mostCommon, false, null, true));
   }
 }
 

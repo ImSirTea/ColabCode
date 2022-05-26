@@ -1,3 +1,5 @@
+import { Project } from 'ts-morph';
+import util from 'util';
 import { CodeSubmissionJSON } from '@/types';
 
 /**
@@ -7,6 +9,8 @@ class CodeSubmission {
   #sessionId: string;
 
   #codeSrc: string;
+
+  #codeAST: Project;
 
   /**
    * Creates a new code submission
@@ -25,6 +29,7 @@ class CodeSubmission {
    */
   set codeSrc(src: string) {
     this.#codeSrc = src;
+    this.updateAST();
   }
 
   /**
@@ -49,6 +54,23 @@ class CodeSubmission {
       userId: this.sessionId,
       codeSrc: this.codeSrc,
     };
+  }
+
+  /**
+   * Updates the AST internally
+   */
+  private updateAST() {
+    console.log(`Updating AST of ${this.sessionId}`);
+
+    this.#codeAST = new Project();
+    this.#codeAST.createSourceFile('index.ts', this.codeSrc);
+  }
+
+  /**
+   * Returns the Abstract Syntax Tree for this user's code
+   */
+  get codeAST() {
+    return this.#codeAST;
   }
 }
 
