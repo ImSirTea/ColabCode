@@ -36,5 +36,6 @@ module.exports = {
     'max-classes-per-file': 'off',
     'class-methods-use-this': 'off',
     'import/no-cycle': 'off',
+    '@typescript-eslint/no-unused-vars': ["error", { "argsIgnorePattern": "^_" }]
   },
 };
