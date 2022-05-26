@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import api from '@/api';
 
 // Create an express server
@@ -7,6 +8,7 @@ const app = express();
 // Make sure body content as text is interpreted properly
 app.use(express.text());
 app.use(express.json());
+app.use(cors());
 
 // Use the API router
 app.use('/api', api);
