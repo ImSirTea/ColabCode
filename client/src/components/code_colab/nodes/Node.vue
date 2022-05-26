@@ -1,23 +1,18 @@
 <template>
-  <v-container fluid>
-    <v-row justify="center" align="center">
-      <v-col cols="auto">
-        <component :is="getComponentForKind(node)" :node="node" />
-      </v-col>
-    </v-row>
-  </v-container>
+  <component :is="getComponentForKind(nodeEntry)" :nodeEntry="nodeEntry" />
 </template>
 
 <script lang="ts">
-import { GenericNode } from "@server/src/analyzerv2/Generic";
+import { GenericNodeFrequencyEntry } from "@server/src/analyzerv2/Generic";
 import { getComponentForKind } from "./nodes";
 import Vue, { PropType } from "vue";
+import { FrequencyList } from "@server/src/analyzerv2/FrequencyList";
 
 export default Vue.extend({
   name: "Node",
   props: {
-    node: {
-      type: Object as PropType<GenericNode>,
+    nodeEntry: {
+      type: Object as PropType<GenericNodeFrequencyEntry | FrequencyList<any>>,
       required: true,
     },
   },

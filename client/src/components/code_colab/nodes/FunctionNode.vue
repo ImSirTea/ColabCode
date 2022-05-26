@@ -1,33 +1,23 @@
+<template>
+  <div></div>
+</template>
 <script lang="ts">
 import { FunctionNode } from "@server/src/analyzerv2/Function";
-import { getComponentForKind } from "./nodes";
-import Vue, { PropType, CreateElement as h } from "vue";
+import Vue, { PropType } from "vue";
 
 export default Vue.extend({
   name: "FunctionNode",
   props: {
-    node: {
-      type: Object as PropType<ReturnType<FunctionNode["getMostCommon"]>>,
+    nodeEntry: {
+      type: Object as PropType<ReturnType<FunctionNode["getAllFrequencies"]>>,
       required: true,
     },
   },
   methods: {
-    getComponentForKind,
-  },
-  computed: {
-    functionType: function() {
-      if (this.node.arrow) {
-        h()
-      }
+    test: function () {
+      this.nodeEntry.kind;
     },
-    functionName: function() {
-
-    },
-    functionParameters: function() {
-
-    }
   },
-  render:
 });
 </script>
 

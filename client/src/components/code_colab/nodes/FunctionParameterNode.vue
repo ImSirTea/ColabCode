@@ -6,7 +6,7 @@ import { UnknownNode } from "@server/src/analyzerv2/Unknown";
 import Vue, { PropType } from "vue";
 
 export default Vue.extend({
-  name: "UnknownNode",
+  name: "FunctionParameterNode",
   props: {
     nodeEntry: {
       type: Object as PropType<ReturnType<UnknownNode["getMostCommon"]>>,

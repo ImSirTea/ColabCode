@@ -1,5 +1,8 @@
 import { RoomJSON } from "@server/src/types";
-import { GenericNode } from "@server/src/analyzerv2/Generic";
+import {
+  GenericNode,
+  GenericNodeFrequencyEntry,
+} from "@server/src/analyzerv2/Generic";
 
 export async function getAllCodeSubmissions(roomId: string): Promise<string[]> {
   const response = await fetch(
@@ -20,11 +23,11 @@ export interface TempMostCommon {
   lines: GenericNode[];
 }
 
-export async function getMostCommonCodeSubmission(
+export async function getCodeFrequencies(
   roomId: string
-): Promise<any> {
+): Promise<GenericNodeFrequencyEntry> {
   const response = await fetch(
-    `http://127.0.0.1:8080/api/rooms/${roomId}/mostcommon`,
+    `http://127.0.0.1:8080/api/rooms/${roomId}/frequencies`,
     { method: "GET" }
   );
 
@@ -32,5 +35,5 @@ export async function getMostCommonCodeSubmission(
     throw Error(`Invalid response for room: ${roomId} ${response.status}`);
   }
 
-  return (await response.json()) as TempMostCommon;
+  return (await response.json()) as GenericNodeFrequencyEntry;
 }

@@ -1,7 +1,13 @@
 <template>
   <div v-if="nodeEntry.properties">
-    <div v-for="(entry, index) in nodeEntry.properties" :key="index" cols="12">
-      <node :node-entry="entry" />
+    <div
+      v-for="(property, index) in nodeEntry.properties"
+      :key="'entry' + index"
+      cols="12"
+    >
+      <div v-for="(entry, index) in property" :key="'node' + index">
+        <node :node-entry="entry" />
+      </div>
     </div>
   </div>
 </template>
@@ -12,7 +18,7 @@ import { GenericNodeFrequencyEntry } from "@server/src/analyzerv2/Generic";
 import Vue, { PropType } from "vue";
 
 export default Vue.extend({
-  name: "BlockNode",
+  name: "LineNode",
   components: { Node: () => import("./Node.vue") },
   props: {
     nodeEntry: {
