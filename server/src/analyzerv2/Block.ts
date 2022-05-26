@@ -5,7 +5,7 @@ import {
 import { ExpressionNode } from './Expression';
 import { FrequencyEntry } from './FrequencyList';
 import { FunctionNode } from './Function';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 import { UnknownNode } from './Unknown';
 import { VariableNode } from './Variable';
 
@@ -33,6 +33,16 @@ export class LineNode extends GenericNode {
         frequency: possibility.count,
         value: possibility.kind,
       })),
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        line: this.possibilities.map((poss) => poss.getAllFrequencies()),
+      },
     };
   }
 
@@ -70,6 +80,7 @@ export class BlockNode extends GenericNode {
 
   tryConsume(node: Node<ts.Node>) {
     if (node.getKind() === SyntaxKind.SyntaxList) {
+      this.count += 1;
       const typedNode = node as SyntaxList;
       typedNode.getChildren().forEach((child, i) => {
         this.addLinePossibility(i, child);
@@ -77,6 +88,7 @@ export class BlockNode extends GenericNode {
       return true;
     }
     if (node.getKind() === SyntaxKind.Block) {
+      this.count += 1;
       const typedNode = node as Block;
       typedNode.getStatements().forEach((child, i) => {
         this.addLinePossibility(i, child);
@@ -100,6 +112,17 @@ export class BlockNode extends GenericNode {
       options[i] = frequencies;
     });
     return options;
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: this.linePossibilities.reduce(
+        (acc, line, i) => ({ ...acc, [i]: line.getAllFrequencies() }),
+        {},
+      ),
+    };
   }
 
   getMostCommon() {

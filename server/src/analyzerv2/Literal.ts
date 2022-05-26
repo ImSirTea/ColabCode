@@ -2,7 +2,7 @@ import {
   LiteralExpression, Node, NumericLiteral, StringLiteral, SyntaxKind, ts,
 } from 'ts-morph';
 import { FrequencyEntry, FrequencyList } from './FrequencyList';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 
 export class LiteralNode extends GenericNode {
   kind = 'LiteralNode';
@@ -34,6 +34,16 @@ export class LiteralNode extends GenericNode {
   getFrequencies(): { [key: string]: FrequencyEntry<any>[]; } {
     return {
       value: this.valuePossibilities.all,
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        value: this.valuePossibilities.all,
+      },
     };
   }
 

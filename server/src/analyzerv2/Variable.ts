@@ -3,7 +3,7 @@ import {
 } from 'ts-morph';
 import { ExpressionNode } from './Expression';
 import { FrequencyList } from './FrequencyList';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 
 const VariableTypes = ['var', 'let', 'const'] as const;
 type VariableType = typeof VariableTypes[number];
@@ -39,6 +39,18 @@ export class VariableNode extends GenericNode {
       subkind: this.subkindPossibilities.all,
       name: this.namePossibilities.all,
       value: this.valuePossibilities.getFrequencies().kind,
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        subkind: this.subkindPossibilities.all,
+        name: this.namePossibilities.all,
+        value: [this.valuePossibilities.getAllFrequencies()],
+      },
     };
   }
 

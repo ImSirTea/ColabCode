@@ -1,6 +1,6 @@
 import { Node, ts } from 'ts-morph';
 import { FrequencyList } from './FrequencyList';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 
 export class UnknownNode extends GenericNode {
   kind = 'UnknownNode';
@@ -20,6 +20,16 @@ export class UnknownNode extends GenericNode {
   getFrequencies() {
     return {
       text: this.textPossibilities.all,
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        text: this.textPossibilities.all,
+      },
     };
   }
 

@@ -1,7 +1,7 @@
 import { Node, ts } from 'ts-morph';
 import { CallNode } from './Call';
 import { FunctionNode } from './Function';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 import { IdentifierNode } from './Identifier';
 import { LiteralNode } from './Literal';
 import { UnknownNode } from './Unknown';
@@ -31,6 +31,16 @@ export class ExpressionNode extends GenericNode {
         frequency: possibility.count,
         value: possibility.kind,
       })),
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        expression: this.possibilities.map((poss) => poss.getAllFrequencies()),
+      },
     };
   }
 

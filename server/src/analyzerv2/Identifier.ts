@@ -2,7 +2,7 @@ import {
   Node, SyntaxKind, ts, Identifier,
 } from 'ts-morph';
 import { FrequencyList } from './FrequencyList';
-import { GenericNode } from './Generic';
+import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
 
 export class IdentifierNode extends GenericNode {
   kind = 'IdentifierNode';
@@ -25,6 +25,16 @@ export class IdentifierNode extends GenericNode {
   getFrequencies() {
     return {
       name: this.namePossibilities.all,
+    };
+  }
+
+  getAllFrequencies(): GenericNodeFrequencyEntry {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        name: this.namePossibilities.all,
+      },
     };
   }
 

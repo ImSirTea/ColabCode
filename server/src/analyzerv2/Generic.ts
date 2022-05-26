@@ -1,6 +1,12 @@
 import { Node, ts } from 'ts-morph';
 import { FrequencyEntry } from './FrequencyList';
 
+export interface GenericNodeFrequencyEntry {
+  kind: string;
+  frequency: number;
+  properties: { [key: string]: GenericNodeFrequencyEntry[] | FrequencyEntry<any>[] }
+}
+
 export abstract class GenericNode {
   abstract kind: string;
 
@@ -9,6 +15,8 @@ export abstract class GenericNode {
   abstract tryConsume(node: Node<ts.Node>): boolean;
 
   abstract getFrequencies(): { [key: string]: FrequencyEntry<any>[] };
+
+  abstract getAllFrequencies(): GenericNodeFrequencyEntry;
 
   abstract getMostCommon(): any;
 
