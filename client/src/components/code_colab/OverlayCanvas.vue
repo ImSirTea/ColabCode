@@ -1,9 +1,9 @@
 <template>
-  <v-alert v-if="errorFetching" type="error">
-    Failed to fetch code submissions for room `{{ roomId }}`, is this the
-    correct room?
-  </v-alert>
-  <v-container v-else fluid>
+  <v-container fluid>
+    <v-alert v-if="errorFetching" type="error">
+      Failed to fetch code submissions for room `{{ roomId }}`, is this the
+      correct room?
+    </v-alert>
     <v-row justify="center" align="center">
       <v-col ref="canvasContainer" class="canvasContainer" cols="auto">
         <canvas ref="canvas" />
@@ -76,8 +76,8 @@ export default Vue.extend({
       if (this.roomId) {
         try {
           this.codeSubmissions = await getAllCodeSubmissions(this.roomId);
-          this.parseCodeSubmissions();
           this.errorFetching = false;
+          this.parseCodeSubmissions();
         } catch {
           this.errorFetching = true;
         }

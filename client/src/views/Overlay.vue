@@ -1,9 +1,6 @@
 <template>
   <v-container fluid>
     <v-row justify="center" align="center">
-      <v-col cols="auto"> Hello and welcome to Colab Code - Overlay </v-col>
-    </v-row>
-    <v-row justify="center" align="center">
       <v-col ref="canvasContainer" class="canvasContainer" cols="auto">
         <overlay-canvas :room-id="roomId" />
       </v-col>
