@@ -118,10 +118,9 @@ export class BlockNode extends GenericNode {
     return {
       kind: this.kind,
       frequency: this.count,
-      properties: this.linePossibilities.reduce(
-        (acc, line, i) => ({ ...acc, [i]: line.getAllFrequencies() }),
-        {},
-      ),
+      properties: {
+        lines: this.linePossibilities.map((line) => line.getAllFrequencies()),
+      },
     };
   }
 
