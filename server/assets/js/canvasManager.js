@@ -26,7 +26,7 @@ async function getAllCodeSubmissions() {
 
   canvas.width = canvasContainer.clientWidth;
   canvas.height = codeSubmissions.reduce((height, codeSubmission) => {
-    const totalLines = JSON.parse(codeSubmission).split("\n").length;
+    const totalLines = codeSubmission.split("\n").length;
     const totalHeight = totalLines * lineHeight + lineHeight;
     
     return Math.max(height, totalHeight)
@@ -37,7 +37,7 @@ async function getAllCodeSubmissions() {
   ctx.fillStyle = `rgba(0, 0, 0, ${alphaPerSubmission})`;
 
   codeSubmissions.forEach((codeSubmission) => {
-    const codeLines = JSON.parse(codeSubmission).split("\n");
+    const codeLines = codeSubmission.split("\n");
 
     codeLines.forEach((line, index) => {
       const lineY = lineHeight + index * lineHeight
