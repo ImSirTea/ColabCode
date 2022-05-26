@@ -9,7 +9,7 @@ function test(b = 'hi') {
 }
 
 function b() {
-  
+  console.log('a', a);
 }`);
 testRoom.submitCode('user2', `
 const test = (c = 'hi') => {
@@ -17,7 +17,7 @@ const test = (c = 'hi') => {
   console.log(a);
 }`);
 testRoom.submitCode('user3', `
-function hello (c, c = 'c', d = 2) {
+function hello (a, c = 'c', d = 2) {
   var a = "testing";
   console.log(a);
 }`);
