@@ -6,6 +6,7 @@ const app = express();
 
 // Make sure body content as text is interpreted properly
 app.use(express.text());
+app.use(express.json());
 
 // Use the API router
 app.use('/api', api);
