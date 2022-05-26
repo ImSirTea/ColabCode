@@ -41,7 +41,9 @@ export class LineNode extends GenericNode {
       kind: this.kind,
       frequency: this.count,
       properties: {
-        line: this.possibilities.map((poss) => poss.getAllFrequencies()),
+        line: this.possibilities
+          .map((poss) => poss.getAllFrequencies())
+          .filter((pos) => pos.frequency > 0),
       },
     };
   }
@@ -118,10 +120,11 @@ export class BlockNode extends GenericNode {
     return {
       kind: this.kind,
       frequency: this.count,
-      properties: this.linePossibilities.reduce(
-        (acc, line, i) => ({ ...acc, [i]: line.getAllFrequencies() }),
-        {},
-      ),
+      properties: {
+        lines: this.linePossibilities
+          .map((line) => line.getAllFrequencies())
+          .filter((line) => line.frequency > 0),
+      },
     };
   }
 

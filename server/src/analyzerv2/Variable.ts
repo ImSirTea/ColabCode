@@ -49,7 +49,8 @@ export class VariableNode extends GenericNode {
       properties: {
         subkind: this.subkindPossibilities.all,
         name: this.namePossibilities.all,
-        value: [this.valuePossibilities.getAllFrequencies()],
+        value: [this.valuePossibilities.getAllFrequencies()]
+          .filter((value) => value.frequency > 0),
       },
     };
   }

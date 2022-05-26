@@ -39,7 +39,9 @@ export class ExpressionNode extends GenericNode {
       kind: this.kind,
       frequency: this.count,
       properties: {
-        expression: this.possibilities.map((poss) => poss.getAllFrequencies()),
+        expression: this.possibilities
+          .map((poss) => poss.getAllFrequencies())
+          .filter((poss) => poss.frequency > 0),
       },
     };
   }
