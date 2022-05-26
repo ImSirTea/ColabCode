@@ -118,7 +118,7 @@ export class FunctionNode extends GenericNode {
       kind: this.kind,
       name: this.namePossibilities.mostCommon.value,
       async: this.asyncPossibilities.mostCommon.value,
-      async: this.asyncPossibilities.mostCommon.value,
+      arrow: this.asyncPossibilities.mostCommon.value,
       parameters: this.parameterPossibilities.map((param) => {
         // If >=50% of functions have this parameter, include it
         if (param.count >= (this.count / 2)) {
