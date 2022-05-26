@@ -46,7 +46,14 @@ class Room {
    * Returns the most common solution of all the submissions
    */
   get mostCommon() {
-    return this.#average;
+    return this.#average.mostCommon;
+  }
+
+  /**
+   * Generates source code for the most common solution
+   */
+  get mostCommonSourceCode() {
+    return this.#average.getSourceCode();
   }
 
   /**
@@ -124,7 +131,7 @@ class Room {
     console.log(functionNode.getSourceCode(0));
     // console.log(util.inspect(line.mostCommon, false, null, true));
 
-    this.#average = functionNode.getMostCommon();
+    this.#average = functionNode;
   }
 }
 

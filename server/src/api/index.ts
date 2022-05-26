@@ -91,4 +91,16 @@ api.get('/rooms/:roomId/mostcommon', (request, response) => {
   response.send(room.mostCommon);
 });
 
+/**
+ * METHOD: GET
+ * ROUTE: /rooms/:roomId/mostcommon
+ * Returns a generated solution averaging all submissions
+ */
+api.get('/rooms/:roomId/sourcecode', (request, response) => {
+  const roomCode = request.params.roomId;
+  const room = rooms[roomCode];
+  if (!room) { response.status(404).send('Room not found'); return; }
+  response.send(room.mostCommonSourceCode);
+});
+
 export default api;
