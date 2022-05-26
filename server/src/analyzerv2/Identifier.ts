@@ -34,4 +34,8 @@ export class IdentifierNode extends GenericNode {
       name: this.namePossibilities.mostCommon.value,
     };
   }
+
+  getSourceCode(_indent: number): string {
+    return `${this.namePossibilities.mostCommon.value}`;
+  }
 }

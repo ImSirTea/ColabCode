@@ -29,4 +29,8 @@ export class UnknownNode extends GenericNode {
       text: this.textPossibilities.mostCommon.value,
     };
   }
+
+  getSourceCode(_indent: number): string {
+    return `${this.textPossibilities.mostCommon.value}`;
+  }
 }

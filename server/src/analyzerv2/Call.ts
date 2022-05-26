@@ -45,6 +45,7 @@ export class CallNode extends GenericNode {
 
   getMostCommon() {
     return {
+      kind: this.kind,
       name: this.namePossibilities.mostCommon.value,
       arguments: this.argumentPossibilities.map((argument) => {
         if (argument.count >= (this.count / 2)) {
@@ -53,5 +54,13 @@ export class CallNode extends GenericNode {
         return undefined;
       }),
     };
+  }
+
+  getSourceCode(indent: number): string {
+    let code = `${this.namePossibilities.mostCommon.value}`;
+    code += '(';
+    code += this.argumentPossibilities.map((argument) => argument.getSourceCode(indent)).join(', ');
+    code += ')';
+    return code;
   }
 }

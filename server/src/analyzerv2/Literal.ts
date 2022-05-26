@@ -43,4 +43,12 @@ export class LiteralNode extends GenericNode {
       value: this.valuePossibilities.mostCommon.value,
     };
   }
+
+  getSourceCode(_indent: number): string {
+    const mostCommon = this.valuePossibilities.mostCommon.value;
+    if (typeof mostCommon === 'number') {
+      return `${mostCommon}`;
+    }
+    return `'${mostCommon}'`;
+  }
 }

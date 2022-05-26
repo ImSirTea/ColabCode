@@ -1,9 +1,9 @@
 import Room from './Room';
 
 const testRoom = new Room('test');
-['user1', 'user2', 'user3'].forEach((u) => testRoom.addUser(u));
+['user1', 'user2', 'user3', 'user4'].forEach((u) => testRoom.addUser(u));
 testRoom.submitCode('user1', `
-function test(b = 'hi') {
+function test(a = 'hi') {
   const a = 'testing';
   console.log(a);
 }
@@ -18,6 +18,11 @@ const test = (c = 'hi') => {
 }`);
 testRoom.submitCode('user3', `
 function hello (a, c = 'c', d = 2) {
+  var a = "testing";
+  console.log(a);
+}`);
+testRoom.submitCode('user4', `
+function hello (a) {
   var a = "testing";
   console.log(a);
 }`);

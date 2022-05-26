@@ -4,6 +4,7 @@ import {
   FunctionDeclaration, Node, ParameterDeclaration, SyntaxKind, ts,
 } from 'ts-morph';
 import { BlockNode } from './Block';
+import { ExpressionNode } from './Expression';
 import { FrequencyList } from './FrequencyList';
 import { GenericNode } from './Generic';
 
@@ -14,7 +15,7 @@ export class FunctionParameterNode extends GenericNode {
 
   namePossibilities = new FrequencyList<string>();
 
-  initialPossibilities = new FrequencyList<any>();
+  initialPossibilities = new ExpressionNode();
 
   tryConsume(node: Node<ts.Node>) {
     if (node.getKind() === SyntaxKind.Parameter) {
@@ -23,7 +24,7 @@ export class FunctionParameterNode extends GenericNode {
       this.namePossibilities.add(typedNode.getName() ?? '');
       const init = typedNode.getInitializer();
       if (init) {
-        // console.log(init);
+        this.initialPossibilities.tryConsume(init);
       }
       return true;
     }
@@ -40,6 +41,14 @@ export class FunctionParameterNode extends GenericNode {
     return {
       name: this.namePossibilities.mostCommon.value,
     };
+  }
+
+  getSourceCode(_indent: number): string {
+    let code = `${this.namePossibilities.mostCommon.value}`;
+    if (this.initialPossibilities.count >= (this.count / 2)) {
+      code += ` = ${this.initialPossibilities.getSourceCode(_indent)}`;
+    }
+    return code;
   }
 }
 
@@ -128,5 +137,23 @@ export class FunctionNode extends GenericNode {
       }),
       body: this.blockPossibilities.getMostCommon(),
     };
+  }
+
+  getSourceCode(indent: number): string {
+    let code = (this.asyncPossibilities.mostCommon.value)
+      ? 'async '
+      : '';
+    const isArrow = this.arrowPossibilities.mostCommon.value;
+    if (!isArrow) {
+      code += `function ${this.namePossibilities.mostCommon.value}`;
+    }
+    code += '(';
+    code += this.parameterPossibilities.map((param) => param.getSourceCode(indent)).join(', ');
+    code += ')';
+    if (isArrow) { code += ' => '; }
+    code += '{\n';
+    code += this.blockPossibilities.getSourceCode(indent + 1);
+    code += '}';
+    return code;
   }
 }

@@ -47,6 +47,18 @@ export class LineNode extends GenericNode {
     }
     throw new Error('Most common does not exist');
   }
+
+  getSourceCode(indent: number) {
+    const frequencies = this.getFrequencies().kind;
+    const mostFrequenct = frequencies.reduce((a, b) => (a.frequency > b.frequency ? a : b));
+    // eslint-disable-next-line no-restricted-syntax
+    for (const possibility of this.possibilities) {
+      if (possibility.kind === mostFrequenct.value) {
+        return `${this.getIndentChars(indent)}${possibility.getSourceCode(indent)};\n`;
+      }
+    }
+    return '';
+  }
 }
 
 export class BlockNode extends GenericNode {
@@ -95,5 +107,11 @@ export class BlockNode extends GenericNode {
       kind: this.kind,
       lines: this.linePossibilities.map((line) => line.getMostCommon()),
     };
+  }
+
+  getSourceCode(indent: number): string {
+    return this.linePossibilities
+      .map((line) => line.getSourceCode(indent))
+      .join('');
   }
 }

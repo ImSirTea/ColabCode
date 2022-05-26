@@ -11,4 +11,10 @@ export abstract class GenericNode {
   abstract getFrequencies(): { [key: string]: FrequencyEntry<any>[] };
 
   abstract getMostCommon(): any;
+
+  abstract getSourceCode(indent: number): string;
+
+  getIndentChars(indent: number) {
+    return '\t'.repeat(indent);
+  }
 }

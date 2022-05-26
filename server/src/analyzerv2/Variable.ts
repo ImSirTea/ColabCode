@@ -50,4 +50,11 @@ export class VariableNode extends GenericNode {
       value: this.valuePossibilities.getMostCommon(),
     };
   }
+
+  getSourceCode(indent: number): string {
+    let code = `${this.subkindPossibilities.mostCommon.value} `;
+    code += `${this.namePossibilities.mostCommon.value} = `;
+    code += `${this.valuePossibilities.getSourceCode(indent)}`;
+    return code;
+  }
 }
