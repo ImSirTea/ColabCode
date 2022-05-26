@@ -3,19 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --port 8081",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "canvas-syntax-highlight": "^1.0.1",
     "core-js": "^3.6.5",
+    "node-html-parser": "^5.3.3",
+    "parse5": "^7.0.0",
+    "prismjs": "^1.28.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
+    "@types/prismjs": "^1.26.0",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.10",

@@ -6,6 +6,7 @@ testRoom.submitCode('user1', `
 function test(b = 'hi') {
   const a = 'testing';
   console.log(a);
+  const aVeryLongNamedVariableHere = "mm yes very long";
 }
 
 function b() {

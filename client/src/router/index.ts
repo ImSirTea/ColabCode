@@ -1,6 +1,8 @@
 import Vue from "vue";
 import VueRouter, { Route, RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
+import Analysis from "../views/Analysis.vue";
+import Overlay from "../views/Overlay.vue";
 
 Vue.use(VueRouter);
 
@@ -13,7 +15,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/overlay/:roomId?",
     name: "Overlay", 
-    component: Home,
+    component: Overlay,
     props: (route: Route) => ({
       roomId: route.params.roomId ?? null,
     })
@@ -21,7 +23,7 @@ const routes: Array<RouteConfig> = [
   {
     path: "/analysis/:roomId?",
     name: "Analysis", 
-    component: Home,
+    component: Analysis,
     props: (route: Route) => ({
       roomId: route.params.roomId ?? null,
     })
