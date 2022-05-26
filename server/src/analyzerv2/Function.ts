@@ -52,6 +52,8 @@ export class FunctionNode extends GenericNode {
 
   asyncPossibilities = new FrequencyList<boolean>();
 
+  arrowPossibilities = new FrequencyList<boolean>();
+
   parameterPossibilities: FunctionParameterNode[] = [];
 
   blockPossibilities = new BlockNode();
@@ -62,6 +64,7 @@ export class FunctionNode extends GenericNode {
       const typedNode = (node as FunctionDeclaration);
       this.namePossibilities.add(typedNode.getName() ?? '');
       this.asyncPossibilities.add(typedNode.getAsyncKeyword() !== undefined);
+      this.arrowPossibilities.add(false);
       typedNode.getParameters().forEach((parameter, i) => {
         if (!this.parameterPossibilities[i]) {
           this.parameterPossibilities[i] = new FunctionParameterNode();
@@ -82,6 +85,7 @@ export class FunctionNode extends GenericNode {
         this.namePossibilities.add(parent.getName());
       }
       this.asyncPossibilities.add(typedNode.getAsyncKeyword() !== undefined);
+      this.arrowPossibilities.add(true);
       typedNode.getParameters().forEach((parameter, i) => {
         if (!this.parameterPossibilities[i]) {
           this.parameterPossibilities[i] = new FunctionParameterNode();
@@ -101,6 +105,7 @@ export class FunctionNode extends GenericNode {
     return {
       name: this.namePossibilities.all,
       async: this.asyncPossibilities.all,
+      arrow: this.arrowPossibilities.all,
       parameter: this.parameterPossibilities.map((param) => ({
         frequency: param.count,
         value: param.getFrequencies(),
@@ -112,6 +117,7 @@ export class FunctionNode extends GenericNode {
     return {
       kind: this.kind,
       name: this.namePossibilities.mostCommon.value,
+      async: this.asyncPossibilities.mostCommon.value,
       async: this.asyncPossibilities.mostCommon.value,
       parameters: this.parameterPossibilities.map((param) => {
         // If >=50% of functions have this parameter, include it
