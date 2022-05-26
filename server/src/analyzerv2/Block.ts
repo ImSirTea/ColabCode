@@ -2,6 +2,7 @@ import {
   Block,
   Node, SyntaxKind, SyntaxList, ts,
 } from 'ts-morph';
+import { ExpressionNode } from './Expression';
 import { FrequencyEntry } from './FrequencyList';
 import { FunctionNode } from './Function';
 import { GenericNode } from './Generic';
@@ -16,6 +17,7 @@ export class LineNode extends GenericNode {
   possibilities: GenericNode[] = [
     new FunctionNode(),
     new VariableNode(),
+    new ExpressionNode(),
     new UnknownNode(),
   ];
 
