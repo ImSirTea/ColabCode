@@ -1,7 +1,10 @@
 <template>
   <v-menu offset-y top>
     <template v-slot:activator="{ on, attrs }">
-      <span v-on="on" v-bind="attrs" class="pr-1">{{ value }}</span>
+      <span v-on="on" v-bind="attrs" class="pr-1">
+        <slot v-if="slot"></slot>
+        {{ !slot ? value : "" }}
+      </span>
     </template>
     <v-list>
       <v-list-item
@@ -18,7 +21,7 @@
 </template>
 <script lang="ts">
 import { FrequencyEntry } from "@server/src/analyzerv2/FrequencyList";
-import Vue, { PropType } from "vue";
+import Vue, { PropType, VNode } from "vue";
 
 export default Vue.extend({
   name: "FrequencyHover",
@@ -35,6 +38,9 @@ export default Vue.extend({
   computed: {
     value: function (): string {
       return this.frequencyEntries[0].value;
+    },
+    slot: function (): VNode[] | undefined {
+      return this.$slots.default;
     },
   },
 });
