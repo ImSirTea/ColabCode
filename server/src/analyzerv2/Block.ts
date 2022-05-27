@@ -5,7 +5,7 @@ import {
 import { ExpressionNode } from './Expression';
 import { FrequencyEntry } from './FrequencyList';
 import { FunctionNode } from './Function';
-import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
+import { GenericNode } from './Generic';
 import { UnknownNode } from './Unknown';
 import { VariableNode } from './Variable';
 
@@ -36,7 +36,7 @@ export class LineNode extends GenericNode {
     };
   }
 
-  getAllFrequencies(): GenericNodeFrequencyEntry {
+  getAllFrequencies() {
     return {
       kind: this.kind,
       frequency: this.count,
@@ -116,7 +116,7 @@ export class BlockNode extends GenericNode {
     return options;
   }
 
-  getAllFrequencies(): GenericNodeFrequencyEntry {
+  getAllFrequencies() {
     return {
       kind: this.kind,
       frequency: this.count,

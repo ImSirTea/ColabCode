@@ -28,7 +28,7 @@ export class IdentifierNode extends GenericNode {
     };
   }
 
-  getAllFrequencies(): GenericNodeFrequencyEntry {
+  getAllFrequencies() {
     return {
       kind: this.kind,
       frequency: this.count,

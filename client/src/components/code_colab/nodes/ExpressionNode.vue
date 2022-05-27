@@ -1,16 +1,25 @@
 <template>
-  <div></div>
+  <div v-if="expressionNode" class="d-inline expression-node">
+    <node :node-entry="expressionNode" />
+  </div>
 </template>
 <script lang="ts">
-import { VariableNode } from "@server/src/analyzerv2/Variable";
+import { ExpressionNode } from "@server/src/analyzerv2/Expression";
+import { GenericNodeFrequencyEntry } from "@server/src/analyzerv2/Generic";
 import Vue, { PropType } from "vue";
 
 export default Vue.extend({
   name: "ExpressionNode",
+  components: { Node: () => import("./Node.vue") },
   props: {
     nodeEntry: {
-      type: Object as PropType<ReturnType<VariableNode["getMostCommon"]>>,
+      type: Object as PropType<ReturnType<ExpressionNode["getAllFrequencies"]>>,
       required: true,
+    },
+  },
+  computed: {
+    expressionNode: function (): GenericNodeFrequencyEntry {
+      return this.nodeEntry.properties.expression[0];
     },
   },
 });

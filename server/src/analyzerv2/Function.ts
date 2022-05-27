@@ -6,7 +6,7 @@ import {
 import { BlockNode } from './Block';
 import { ExpressionNode } from './Expression';
 import { FrequencyList } from './FrequencyList';
-import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
+import { GenericNode } from './Generic';
 
 export class FunctionParameterNode extends GenericNode {
   kind = 'FunctionParameterNode';
@@ -37,7 +37,7 @@ export class FunctionParameterNode extends GenericNode {
     };
   }
 
-  getAllFrequencies(): GenericNodeFrequencyEntry {
+  getAllFrequencies() {
     return {
       kind: this.kind,
       frequency: this.count,
@@ -142,6 +142,7 @@ export class FunctionNode extends GenericNode {
         async: this.asyncPossibilities.all,
         arrow: this.arrowPossibilities.all,
         parameters: this.parameterPossibilities.map((param) => param.getAllFrequencies()),
+        body: [this.blockPossibilities.getAllFrequencies()],
       },
     };
   }

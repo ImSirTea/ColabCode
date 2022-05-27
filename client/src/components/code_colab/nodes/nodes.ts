@@ -5,6 +5,8 @@ import UnknownNode from "@/components/code_colab/nodes/UnknownNode.vue";
 import VariableNode from "@/components/code_colab/nodes/VariableNode.vue";
 import LineNode from "@/components/code_colab/nodes/LineNode.vue";
 import ExpressionNode from "@/components/code_colab/nodes/ExpressionNode.vue";
+import FunctionParameterNode from "@/components/code_colab/nodes/FunctionParameterNode.vue";
+import CallNode from "@/components/code_colab/nodes/CallNode.vue";
 import { VueConstructor } from "vue";
 
 export function getComponentForKind(
@@ -28,6 +30,12 @@ export function getComponentForKind(
 
     case "ExpressionNode":
       return ExpressionNode;
+
+    case "FunctionParameterNode":
+      return FunctionParameterNode;
+
+    case "CallNode":
+      return CallNode;
   }
 
   return null;
