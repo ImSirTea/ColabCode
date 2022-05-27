@@ -37,4 +37,10 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+.function-parameter-node {
+  &:not(:last-of-type)::after {
+    content: ", ";
+  }
+}
+</style>

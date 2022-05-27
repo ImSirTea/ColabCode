@@ -22,4 +22,14 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+@import "@/assets/colours.scss";
+
+.function-node {
+  color: $_default;
+}
+
+.keyword {
+  color: $keyword;
+}
+</style>

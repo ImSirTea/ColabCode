@@ -6,7 +6,7 @@
     </v-alert>
     <v-row justify="center" align="center">
       <v-col cols="auto">
-        <node v-if="mostCommonCode" :node-entry="mostCommonCode" />
+        <node v-if="mostCommonCode" :node-entry="mostCommonCode" class="node" />
       </v-col>
     </v-row>
   </v-container>
@@ -53,4 +53,8 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+.node {
+  font-family: monospace;
+}
+</style>

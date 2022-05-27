@@ -1,11 +1,10 @@
 <template>
-  <div class="d-inline literal-node">
+  <div :class="`d-inline literal-node ${type}`">
     <frequency-hover
       :frequency-entries="valueFrequencies"
       :total-frequency="nodeEntry.frequency"
+      >{{ value }}</frequency-hover
     >
-      {{ value }}
-    </frequency-hover>
   </div>
 </template>
 <script lang="ts">
@@ -34,8 +33,23 @@ export default Vue.extend({
       }
       return `${value}`;
     },
+    type: function (): string {
+      return typeof this.nodeEntry.properties.value[0].value;
+    },
   },
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+@import "@/assets/colours.scss";
+
+.literal-node {
+  &.string {
+    color: $string;
+  }
+
+  &.number {
+    color: $number;
+  }
+}
+</style>
