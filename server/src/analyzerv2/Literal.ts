@@ -2,7 +2,7 @@ import {
   LiteralExpression, Node, NumericLiteral, StringLiteral, SyntaxKind, ts,
 } from 'ts-morph';
 import { FrequencyEntry, FrequencyList } from './FrequencyList';
-import { GenericNode, GenericNodeFrequencyEntry } from './Generic';
+import { GenericNode } from './Generic';
 
 export class LiteralNode extends GenericNode {
   kind = 'LiteralNode';
