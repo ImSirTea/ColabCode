@@ -5,7 +5,7 @@
       :frequency-entries="nameFrequencies"
       :total-frequency="nodeEntry.frequency"
     />
-    <node :node-entry="initialValueNode" />
+    = <node :node-entry="initialValueNode" />
   </div>
 </template>
 <script lang="ts">
