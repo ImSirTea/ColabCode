@@ -1,18 +1,23 @@
 import {
+  Block,
   Node, SyntaxKind, SyntaxList, ts,
 } from 'ts-morph';
+import { ExpressionNode } from './Expression';
 import { FrequencyEntry } from './FrequencyList';
 import { FunctionNode } from './Function';
 import { GenericNode } from './Generic';
 import { UnknownNode } from './Unknown';
+import { VariableNode } from './Variable';
 
 export class LineNode extends GenericNode {
   kind = 'LineNode';
 
   count = 0;
 
-  possibilities = [
+  possibilities: GenericNode[] = [
     new FunctionNode(),
+    new VariableNode(),
+    new ExpressionNode(),
     new UnknownNode(),
   ];
 
@@ -31,6 +36,18 @@ export class LineNode extends GenericNode {
     };
   }
 
+  getAllFrequencies() {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        line: this.possibilities
+          .map((poss) => poss.getAllFrequencies())
+          .filter((pos) => pos.frequency > 0),
+      },
+    };
+  }
+
   getMostCommon() {
     const frequencies = this.getFrequencies().kind;
     const mostFrequenct = frequencies.reduce((a, b) => (a.frequency > b.frequency ? a : b));
@@ -41,6 +58,18 @@ export class LineNode extends GenericNode {
       }
     }
     throw new Error('Most common does not exist');
+  }
+
+  getSourceCode(indent: number) {
+    const frequencies = this.getFrequencies().kind;
+    const mostFrequenct = frequencies.reduce((a, b) => (a.frequency > b.frequency ? a : b));
+    // eslint-disable-next-line no-restricted-syntax
+    for (const possibility of this.possibilities) {
+      if (possibility.kind === mostFrequenct.value) {
+        return `${this.getIndentChars(indent)}${possibility.getSourceCode(indent)};\n`;
+      }
+    }
+    return '';
   }
 }
 
@@ -53,8 +82,17 @@ export class BlockNode extends GenericNode {
 
   tryConsume(node: Node<ts.Node>) {
     if (node.getKind() === SyntaxKind.SyntaxList) {
+      this.count += 1;
       const typedNode = node as SyntaxList;
       typedNode.getChildren().forEach((child, i) => {
+        this.addLinePossibility(i, child);
+      });
+      return true;
+    }
+    if (node.getKind() === SyntaxKind.Block) {
+      this.count += 1;
+      const typedNode = node as Block;
+      typedNode.getStatements().forEach((child, i) => {
         this.addLinePossibility(i, child);
       });
       return true;
@@ -78,10 +116,28 @@ export class BlockNode extends GenericNode {
     return options;
   }
 
+  getAllFrequencies() {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        lines: this.linePossibilities
+          .map((line) => line.getAllFrequencies())
+          .filter((line) => line.frequency > 0),
+      },
+    };
+  }
+
   getMostCommon() {
     return {
       kind: this.kind,
       lines: this.linePossibilities.map((line) => line.getMostCommon()),
     };
+  }
+
+  getSourceCode(indent: number): string {
+    return this.linePossibilities
+      .map((line) => line.getSourceCode(indent))
+      .join('');
   }
 }

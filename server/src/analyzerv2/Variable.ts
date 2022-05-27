@@ -1,45 +1,73 @@
 import {
-  LiteralExpression,
-  Node, NumericLiteral, StringLiteral, SyntaxKind, ts,
+  Node, SyntaxKind, ts, VariableStatement,
 } from 'ts-morph';
-import { FrequencyEntry, FrequencyList } from './FrequencyList';
+import { ExpressionNode } from './Expression';
+import { FrequencyList } from './FrequencyList';
 import { GenericNode } from './Generic';
 
-export class LiteralNode extends GenericNode {
-  kind = 'LiteralNode';
+const VariableTypes = ['var', 'let', 'const'] as const;
+type VariableType = typeof VariableTypes[number];
+
+export class VariableNode extends GenericNode {
+  kind = 'VariableNode';
 
   count = 0;
 
-  valuePossibilities = new FrequencyList<string | number>();
+  subkindPossibilities = new FrequencyList<VariableType>();
+
+  namePossibilities = new FrequencyList<string>();
+
+  valuePossibilities = new ExpressionNode();
 
   tryConsume(node: Node<ts.Node>) {
-    if (node.getKind() === SyntaxKind.StringLiteral) {
-      const typedNode = (node as StringLiteral);
-      this.valuePossibilities.add(typedNode.getLiteralValue());
-      return true;
-    }
-    if (node.getKind() === SyntaxKind.NumericLiteral) {
-      const typedNode = (node as NumericLiteral);
-      this.valuePossibilities.add(typedNode.getLiteralValue());
-      return true;
-    }
-    if (node.getKind() === SyntaxKind.LiteralType) {
-      const typedNode = (node as LiteralExpression);
-      this.valuePossibilities.add(typedNode.getLiteralText());
+    if (node.getKind() === SyntaxKind.VariableStatement) {
+      this.count += 1;
+      const typedNode = (node as VariableStatement);
+      this.subkindPossibilities.add(typedNode.getDeclarationKind());
+      this.namePossibilities.add(typedNode.getDeclarations()[0].getName());
+      const value = typedNode.getDeclarations()[0].getInitializer();
+      if (value) {
+        this.valuePossibilities.tryConsume(value);
+      }
       return true;
     }
     return false;
   }
 
-  getFrequencies(): { [key: string]: FrequencyEntry<any>[]; } {
+  getFrequencies() {
     return {
-      value: this.valuePossibilities.all,
+      subkind: this.subkindPossibilities.all,
+      name: this.namePossibilities.all,
+      value: this.valuePossibilities.getFrequencies().kind,
+    };
+  }
+
+  getAllFrequencies() {
+    return {
+      kind: this.kind,
+      frequency: this.count,
+      properties: {
+        subkind: this.subkindPossibilities.all,
+        name: this.namePossibilities.all,
+        value: [this.valuePossibilities.getAllFrequencies()]
+          .filter((value) => value.frequency > 0),
+      },
     };
   }
 
   getMostCommon() {
     return {
-      value: this.valuePossibilities.mostCommon.value,
+      kind: this.kind,
+      subkind: this.subkindPossibilities.mostCommon.value,
+      name: this.namePossibilities.mostCommon.value,
+      value: this.valuePossibilities.getMostCommon(),
     };
+  }
+
+  getSourceCode(indent: number): string {
+    let code = `${this.subkindPossibilities.mostCommon.value} `;
+    code += `${this.namePossibilities.mostCommon.value} = `;
+    code += `${this.valuePossibilities.getSourceCode(indent)}`;
+    return code;
   }
 }

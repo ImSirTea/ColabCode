@@ -79,4 +79,40 @@ api.get('/rooms/:roomId/submissions', (request, response) => {
   response.send(submissions);
 });
 
+/**
+ * METHOD: GET
+ * ROUTE: /rooms/:roomId/mostcommon
+ * Returns a representation of the most common solution
+ */
+api.get('/rooms/:roomId/mostcommon', (request, response) => {
+  const roomCode = request.params.roomId;
+  const room = rooms[roomCode];
+  if (!room) { response.status(404).send('Room not found'); return; }
+  response.send(room.mostCommon);
+});
+
+/**
+ * METHOD: GET
+ * ROUTE: /rooms/:roomId/mostcommon
+ * Returns a generated solution averaging all submissions
+ */
+api.get('/rooms/:roomId/sourcecode', (request, response) => {
+  const roomCode = request.params.roomId;
+  const room = rooms[roomCode];
+  if (!room) { response.status(404).send('Room not found'); return; }
+  response.send(room.mostCommonSourceCode);
+});
+
+/**
+ * METHOD: GET
+ * ROUTE: /rooms/:roomId/mostcommon
+ * Returns a generated solution averaging all submissions
+ */
+api.get('/rooms/:roomId/frequencies', (request, response) => {
+  const roomCode = request.params.roomId;
+  const room = rooms[roomCode];
+  if (!room) { response.status(404).send('Room not found'); return; }
+  response.send(room.frequencies);
+});
+
 export default api;

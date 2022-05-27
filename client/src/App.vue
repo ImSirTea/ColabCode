@@ -49,7 +49,7 @@ export default Vue.extend({
   name: "App",
   data: function () {
     return {
-      roomId: "",
+      roomId: router.currentRoute.params.roomId ?? "",
     };
   },
   watch: {

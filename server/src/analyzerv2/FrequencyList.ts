@@ -28,6 +28,12 @@ export class FrequencyList<T> {
    * Gets the most common value from the list
    */
   get mostCommon() {
+    if (Object.keys(this.frequencies).length === 0) {
+      return {
+        frequency: 0,
+        value: undefined,
+      } as FrequencyEntry<undefined>;
+    }
     const key = Object.keys(this.frequencies)
       .reduce((a, b) => (this.frequencies[a].frequency > this.frequencies[b].frequency ? a : b));
     return this.frequencies[key];
