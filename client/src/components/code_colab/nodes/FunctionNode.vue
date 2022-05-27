@@ -1,28 +1,32 @@
 <template>
   <div v-if="isArrowFunction" class="function-node">
-    const
+    <span class="keyword">const</span>
     <frequency-hover
       :frequency-entries="nameFrequencies"
       :total-frequency="nodeEntry.frequency"
     />
-    ={{ isAsync ? " async " : " " }} (<node
-      v-for="(param, index) in parameterNodes"
-      :key="'param' + index"
-      :node-entry="param"
-    />) => {
+    ={{ isAsync ? " async " : " " }} (<span>
+      <node
+        v-for="(param, index) in parameterNodes"
+        :key="'param' + index"
+        :node-entry="param"
+      /> </span
+    >) => {
     <node :node-entry="bodyNode" />
     }
   </div>
   <div v-else class="function-node">
-    {{ isAsync ? " async " : " " }} function
+    {{ isAsync ? " async " : " " }} <span class="keyword">function </span>
     <frequency-hover
       :frequency-entries="nameFrequencies"
       :total-frequency="nodeEntry.frequency"
-    />(<node
-      v-for="(param, index) in parameterNodes"
-      :key="'param' + index"
-      :node-entry="param"
-    />) {
+    />(<span>
+      <node
+        v-for="(param, index) in parameterNodes"
+        :key="'param' + index"
+        :node-entry="param"
+      /> </span
+    >) {
     <node :node-entry="bodyNode" />
     }
   </div>
@@ -89,4 +93,10 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+@import "@/assets/colours.scss";
+
+.function-node {
+  color: $_default;
+}
+</style>

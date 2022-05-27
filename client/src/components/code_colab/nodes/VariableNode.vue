@@ -3,8 +3,9 @@
     <frequency-hover
       :frequency-entries="subkindEntries"
       :total-frequency="nodeEntry.frequency"
+      class="keyword"
     />
-
+    {{ " " }}
     <frequency-hover
       :frequency-entries="nameEntries"
       :total-frequency="nodeEntry.frequency"

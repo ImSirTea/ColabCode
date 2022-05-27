@@ -7,6 +7,7 @@ import LineNode from "@/components/code_colab/nodes/LineNode.vue";
 import ExpressionNode from "@/components/code_colab/nodes/ExpressionNode.vue";
 import FunctionParameterNode from "@/components/code_colab/nodes/FunctionParameterNode.vue";
 import CallNode from "@/components/code_colab/nodes/CallNode.vue";
+import LiteralNode from "@/components/code_colab/nodes/LiteralNode.vue";
 import { VueConstructor } from "vue";
 
 export function getComponentForKind(
@@ -36,6 +37,9 @@ export function getComponentForKind(
 
     case "CallNode":
       return CallNode;
+
+    case "LiteralNode":
+      return LiteralNode;
   }
 
   return null;

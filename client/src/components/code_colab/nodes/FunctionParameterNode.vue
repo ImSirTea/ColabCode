@@ -5,7 +5,7 @@
       :frequency-entries="nameFrequencies"
       :total-frequency="nodeEntry.frequency"
     />
-    <node :node-entry="initialValueNode" />
+    = <node :node-entry="initialValueNode" />
   </div>
 </template>
 <script lang="ts">
@@ -37,4 +37,10 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="scss">
+.function-parameter-node {
+  &:not(:last-of-type)::after {
+    content: ", ";
+  }
+}
+</style>

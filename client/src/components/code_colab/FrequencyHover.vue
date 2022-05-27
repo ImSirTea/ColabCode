@@ -1,7 +1,9 @@
 <template>
   <v-menu offset-y top>
     <template v-slot:activator="{ on, attrs }">
-      <span v-on="on" v-bind="attrs" class="pr-1">{{ value }}</span>
+      <span v-on="on" v-bind="attrs">
+        <slot>{{ value }}</slot>
+      </span>
     </template>
     <v-list>
       <v-list-item
@@ -34,6 +36,7 @@ export default Vue.extend({
   },
   computed: {
     value: function (): string {
+      this.$attrs.class;
       return this.frequencyEntries[0].value;
     },
   },
